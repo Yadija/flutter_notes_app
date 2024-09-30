@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/model/note.dart';
+import 'package:flutter_notes_app/screens/add_note.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,6 +52,22 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddNote()),
+          ).then((value) {
+            if (value != null) {
+              setState(() {
+                notes.add(value);
+              });
+            }
+          });
+        },
+        tooltip: 'Create Note',
+        child: const Icon(Icons.add),
       ),
     );
   }
