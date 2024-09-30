@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/model/note.dart';
 import 'package:flutter_notes_app/screens/add_note.dart';
+import 'package:flutter_notes_app/screens/search.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,11 +13,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes App'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: NoteSearchDelegate(notes, searchController.text),
+              );
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: notes.length,
