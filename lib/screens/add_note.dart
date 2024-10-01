@@ -13,58 +13,77 @@ class _AddNoteState extends State<AddNote> {
   final _formKey = GlobalKey<FormState>();
   String _title = '';
   String _content = '';
+  bool _isButtonEnabled = false;
+
+  void _updateButtonState() {
+    setState(() {
+      _isButtonEnabled = _title.isNotEmpty && _content.isNotEmpty;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Note'),
+        backgroundColor: const Color(0xFFFAFAFA),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Title',
-                  border: OutlineInputBorder(),
+      body: Column(
+        children: [
+          const Divider(height: 1, color: Colors.black),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Title',
+                          border: InputBorder.none,
+                        ),
+                        style: const TextStyle(fontSize: 24),
+                        onChanged: (value) {
+                          _title = value;
+                          _updateButtonState();
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Write something...',
+                          border: InputBorder.none,
+                        ),
+                        style: const TextStyle(fontSize: 16),
+                        onChanged: (value) {
+                          _content = value;
+                          _updateButtonState();
+                        },
+                        maxLines: null,
+                      ),
+                    ],
+                  ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _title = value!,
               ),
-              const SizedBox(height: 16),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Content',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some content';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _content = value!,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    Navigator.pop(context, Note(_title, _content));
-                  }
-                },
-                child: const Text('Create Note'),
-              ),
-            ],
+            ),
           ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _isButtonEnabled ? () {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save();
+            Navigator.pop(context, Note(_title, _content));
+          }
+        } : null,
+        backgroundColor: _isButtonEnabled ? null : Colors.transparent,
+        elevation: _isButtonEnabled ? 6.0 : 0.0,
+        child: Icon(
+          Icons.add,
+          color: _isButtonEnabled ? null : Colors.grey,
         ),
       ),
     );
