@@ -10,7 +10,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Notes App',
-      theme: ThemeData(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFFAFAFA),
+      ),
       home: const HomePage(),
     );
   }
