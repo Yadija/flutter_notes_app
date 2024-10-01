@@ -51,6 +51,7 @@ class NoteSearchDelegate extends SearchDelegate<String> {
   Widget _buildNoteList(List<Note> filteredNotes, BuildContext context) {
     return Column(
       children: [
+        const Divider(height: 1, color: Colors.black),
         if (filteredNotes.isEmpty)
           const Center(child: Text('No notes found.')),
         Expanded(

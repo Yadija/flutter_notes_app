@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes App'),
+        backgroundColor: const Color(0xFFFAFAFA),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -53,15 +54,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: NotesList(
-        notes: notes,
-        onTap: (note) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Detail(note: note)),
-          );
-        },
-        onDelete: _deleteNote,
+      body: Column(
+        children: [
+          const Divider(height: 1, color: Colors.black),
+          Expanded(
+            child: NotesList(
+              notes: notes,
+              onTap: (note) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Detail(note: note)),
+                );
+              },
+              onDelete: _deleteNote,
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
