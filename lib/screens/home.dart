@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/model/note.dart';
 import 'package:flutter_notes_app/screens/add_note.dart';
 import 'package:flutter_notes_app/screens/search.dart';
+import 'package:flutter_notes_app/screens/detail.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -76,6 +77,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
+              );
+            },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Detail(note: notes[index])),
               );
             },
           );
