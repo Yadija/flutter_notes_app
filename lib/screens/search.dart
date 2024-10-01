@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_notes_app/model/note.dart';
+import 'package:flutter_notes_app/models/note.dart';
 import 'package:intl/intl.dart';
 
 class NoteSearchDelegate extends SearchDelegate<String> {
