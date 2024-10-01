@@ -72,18 +72,25 @@ class _AddNoteState extends State<AddNote> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _isButtonEnabled ? () {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
-            Navigator.pop(context, Note(_title, _content));
-          }
-        } : null,
-        backgroundColor: _isButtonEnabled ? null : Colors.transparent,
-        elevation: _isButtonEnabled ? 6.0 : 0.0,
-        child: Icon(
-          Icons.add,
-          color: _isButtonEnabled ? null : Colors.grey,
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFFAFAFA),
+          shape: BoxShape.circle,
+          border: _isButtonEnabled ? Border.all(color: Colors.black) : Border.all(color: Colors.grey),
+        ),
+        child: IconButton(
+          icon: Icon(
+            Icons.add,
+            color: _isButtonEnabled ? Colors.black : Colors.grey,
+          ),
+          onPressed: _isButtonEnabled
+              ? () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    Navigator.pop(context, Note(_title, _content));
+                  }
+                }
+              : null,
         ),
       ),
     );

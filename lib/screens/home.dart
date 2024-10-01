@@ -71,21 +71,27 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddNote()),
-          ).then((value) {
-            if (value != null) {
-              setState(() {
-                notes.add(value);
-              });
-            }
-          });
-        },
-        tooltip: 'Create Note',
-        child: const Icon(Icons.add),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFFAFAFA),
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black),
+        ),
+        child: IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddNote()),
+            ).then((value) {
+              if (value != null) {
+                setState(() {
+                  notes.add(value);
+                });
+              }
+            });
+          },
+        ),
       ),
     );
   }
