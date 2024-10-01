@@ -3,7 +3,7 @@ import 'package:flutter_notes_app/models/note.dart';
 import 'package:flutter_notes_app/screens/add_note.dart';
 import 'package:flutter_notes_app/screens/search.dart';
 import 'package:flutter_notes_app/screens/detail.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_notes_app/widgets/notes_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,6 +30,12 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void _deleteNote(int index) {
+    setState(() {
+      notes.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,53 +46,22 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(
-                context: context,
-                delegate: NoteSearchDelegate(notes, searchController.text),
-              );
+              context: context,
+              delegate: NoteSearchDelegate(notes),
+            );
             },
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: notes.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(notes[index].title),
-            trailing: Text(DateFormat('d MMM yyyy').format(notes[index].createdAt)),
-            onLongPress: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Delete Note'),
-                  content: const Text('Are you sure you want to delete this note?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          notes.removeAt(index);
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Delete'),
-                    ),
-                  ],
-                ),
-              );
-            },
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Detail(note: notes[index])),
-              );
-            },
+      body: NotesList(
+        notes: notes,
+        onTap: (note) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Detail(note: note)),
           );
         },
+        onDelete: _deleteNote,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

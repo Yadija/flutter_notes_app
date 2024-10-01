@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notes_app/screens/detail.dart';
 import 'package:flutter_notes_app/models/note.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_notes_app/widgets/notes_list.dart';
 
 class NoteSearchDelegate extends SearchDelegate<String> {
   final List<Note> notes;
-  final String searchQuery;
 
-  NoteSearchDelegate(this.notes, this.searchQuery);
+  NoteSearchDelegate(this.notes);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -32,30 +32,42 @@ class NoteSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final filteredNotes = notes.where((note) => note.title.toLowerCase().contains(query.toLowerCase())).toList();
-    return ListView.builder(
-      itemCount: filteredNotes.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(filteredNotes[index].title),
-          subtitle: Text(filteredNotes[index].content),
-          trailing: Text(DateFormat('d MMM yyyy').format(notes[index].createdAt)),
-        );
-      },
-    );
+    final filteredNotes = notes
+        .where((note) => note.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return _buildNoteList(filteredNotes, context);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final filteredNotes = notes.where((note) => note.title.toLowerCase().contains(query.toLowerCase())).toList();
-    return ListView.builder(
-      itemCount: filteredNotes.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(filteredNotes[index].title),
-          trailing: Text(DateFormat('d MMM yyyy').format(notes[index].createdAt)),
-        );
-      },
+    final filteredNotes = notes
+        .where((note) => note.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return _buildNoteList(filteredNotes, context);
+  }
+
+  Widget _buildNoteList(List<Note> filteredNotes, BuildContext context) {
+    return Column(
+      children: [
+        if (filteredNotes.isEmpty)
+          const Center(child: Text('No notes found.')),
+        Expanded(
+          child: NotesList(
+            notes: filteredNotes,
+            onTap: (note) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Detail(note: note)),
+              );
+            },
+            onDelete: (index) {
+              // Optionally handle delete action if needed
+            },
+          ),
+        ),
+      ],
     );
   }
 }
