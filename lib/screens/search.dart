@@ -54,10 +54,6 @@ class NoteSearchDelegate extends SearchDelegate<String> {
     return Column(
       children: [
         const Divider(height: 1, color: Colors.black),
-        if (filteredNotes.isEmpty) ...[
-          const SizedBox(height: 16),
-          const Center(child: Text('No notes found.')),
-        ],
         Expanded(
           child: NotesList(
             notes: filteredNotes,

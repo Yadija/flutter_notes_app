@@ -17,22 +17,39 @@ class NotesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: notes.length,
-      itemBuilder: (context, index) {
-        return NoteItem(
-          note: notes[index],
-          onTap: () => onTap(notes[index]),
-          onDelete: () {
-            showDialog(
-              context: context,
-              builder: (context) => DeleteNoteDialog(
-                onConfirm: () => onDelete(index),
-              ),
-            );
-          },
-        );
-      },
+    if (notes.isEmpty) {
+      return const Column(
+        children: [
+          SizedBox(height: 16),
+          Center(child: Text('No notes found')),
+        ],
+      );
+      // return const Center(child: Text('No notes'));
+    }
+
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Expanded(
+          child: ListView.builder(
+            itemCount: notes.length,
+            itemBuilder: (context, index) {
+              return NoteItem(
+                note: notes[index],
+                onTap: () => onTap(notes[index]),
+                onDelete: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => DeleteNoteDialog(
+                      onConfirm: () => onDelete(index),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
