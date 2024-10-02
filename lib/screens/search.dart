@@ -1,3 +1,4 @@
+// search.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/screens/detail.dart';
 import 'package:flutter_notes_app/models/note.dart';
@@ -5,8 +6,9 @@ import 'package:flutter_notes_app/widgets/notes_list.dart';
 
 class NoteSearchDelegate extends SearchDelegate<String> {
   final List<Note> notes;
+  final Function(int) onDelete;
 
-  NoteSearchDelegate(this.notes);
+  NoteSearchDelegate(this.notes, this.onDelete);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -52,19 +54,28 @@ class NoteSearchDelegate extends SearchDelegate<String> {
     return Column(
       children: [
         const Divider(height: 1, color: Colors.black),
-        if (filteredNotes.isEmpty)
+        if (filteredNotes.isEmpty) ...[
+          const SizedBox(height: 16),
           const Center(child: Text('No notes found.')),
+        ],
         Expanded(
           child: NotesList(
             notes: filteredNotes,
             onTap: (note) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Detail(note: note)),
+                MaterialPageRoute(builder: (context) => Detail(note: note, onDelete: () {
+                  final index = notes.indexOf(note);
+                  if (index != -1) {
+                    onDelete(index);
+                    Navigator.pop(context);
+                  }
+                })),
               );
             },
             onDelete: (index) {
-              // Optionally handle delete action if needed
+              onDelete(index);
+              Navigator.pop(context);
             },
           ),
         ),

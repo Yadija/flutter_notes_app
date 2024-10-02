@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DeleteNoteDialog extends StatelessWidget {
   final VoidCallback onConfirm;
 
-  const DeleteNoteDialog({Key? key, required this.onConfirm}) : super(key: key);
+  const DeleteNoteDialog({super.key, required this.onConfirm});
 
   @override
   Widget build(BuildContext context) {

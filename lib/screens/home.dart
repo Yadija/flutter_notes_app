@@ -47,9 +47,12 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(
-              context: context,
-              delegate: NoteSearchDelegate(notes),
-            );
+                context: context,
+                delegate: NoteSearchDelegate(
+                  notes,
+                  _deleteNote,
+                ),
+              );
             },
           ),
         ],
@@ -63,7 +66,13 @@ class _HomePageState extends State<HomePage> {
               onTap: (note) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Detail(note: note)),
+                  MaterialPageRoute(builder: (context) => Detail(
+                    note: note,
+                    onDelete: () {
+                      _deleteNote(notes.indexOf(note));
+                      Navigator.pop(context);
+                    },
+                  )),
                 );
               },
               onDelete: _deleteNote,

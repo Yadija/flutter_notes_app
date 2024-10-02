@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/models/note.dart';
+import 'package:flutter_notes_app/widgets/delete_note_dialog.dart';
 import 'package:intl/intl.dart';
 
 class Detail extends StatelessWidget {
   final Note note;
+  final VoidCallback onDelete;
 
-  const Detail({super.key, required this.note});
+  const Detail({super.key, required this.note, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Note Details'),
         backgroundColor: const Color(0xFFFAFAFA),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => DeleteNoteDialog(
+                  onConfirm: () {
+                    onDelete();
+                  },
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
