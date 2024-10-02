@@ -10,6 +10,8 @@ class DeleteNoteDialog extends StatelessWidget {
     return AlertDialog(
       title: const Text('Delete Note'),
       content: const Text('Are you sure you want to delete this note?'),
+      shape: const Border.fromBorderSide(BorderSide(color: Colors.black, width: 2)),
+      backgroundColor: Colors.white,
       actions: [
         TextButton(
           onPressed: () {
