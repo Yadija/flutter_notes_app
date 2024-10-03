@@ -1,16 +1,37 @@
-# flutter_notes_app
+# Simple Notes Application
+The Simple Notes Application is a Flutter app that allows users to add, view, and delete notes. This application uses a combination of Stateless and Stateful widgets to provide an interactive user experience.
 
-A new Flutter project.
+## Features
+- Add new notes with a title and content.
+- Display a list of added notes.
+- Delete notes from the list.
 
-## Getting Started
+## How to Use the Application
+1. **Running the Application**
+   - Ensure you have the Flutter SDK installed.
+   - Clone this repository and navigate to the project directory.
+   - Run the following commands:
+     ```bash
+     flutter pub get
+     flutter run
+     ```
 
-This project is a starting point for a Flutter application.
+   - Running in browser:
+     ```bash
+     flutter run -d chrome
+     ```
 
-A few resources to get you started if this is your first Flutter project:
+2. **Adding Notes**
+   - Tap the `+` button in the bottom right corner to open the add note screen.
+   - Enter a title and content for your note.
+   - Press the `+` button to add the note to the list.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. **Viewing the Notes List**
+   - The list of added notes will be displayed on the main screen.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4. **Deleting Notes**
+   - Hold the note to delete or tap the `delete icon` button in detail page.
+
+## System Requirements
+- Latest version of Flutter SDK
+- An IDE like Visual Studio Code or Android Studio
